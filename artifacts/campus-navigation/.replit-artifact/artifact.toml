@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Campus Navigation System"
+description = "An interactive indoor wayfinding app for navigating campus floor plans, finding rooms and amenities, and switching between building levels."
+version = "1.0.0"
+id = "artifacts/campus-navigation"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 26163
+
+[services.development]
+run = "pnpm --filter @workspace/campus-navigation run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/campus-navigation", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/campus-navigation/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "26163"
+BASE_PATH = "/"
